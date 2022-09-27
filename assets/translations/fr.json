@@ -1,0 +1,27 @@
+{
+    "anfari.":"Anfari",
+    "etudiant":"Étudiant",
+    "boarding1_description":"Débarrassez-vous de vos peurs . . .",
+    "boarding2_description":"Sujets d'examen (années passées) avec leurs solutions expliquées par les premiers étudiants",
+    "boarding_nextBtn":"Prochain",
+    "boarding3_discoverBtn":"Découvrir l'application",
+    "boarding3_LoginBtn":"Connecte-toi maintenant",
+    "login_developerBtn":"Je suis\n un développeur",
+    "login_userBtn":"Je suis\n un utilisateur",
+    "login_text":"Se connecter",
+    "login_textDescription": "Connectez-vous avec votre numéro de téléphone.",
+    "login_enterPhone":"Entrez votre numéro de téléphone",
+    "login_sendBtn":"Envoyer",
+    "register_title":"Créez votre propre profil",
+    "register_username":"Nom d'utilisateur",
+    "register_fac":"l'Université",
+    "register_faculty":"le collège",
+    "register_special":"Spécialisation",
+    "register_save":"Enregistrer",
+    "otp_title":"Vérifiez votre numéro",
+    "otp_desc":"Un code à 6 chiffres a été envoyé à votre téléphone.",
+    "otp_verifyBtn":"vérification",
+    "otp_resend":"Re-transmetter",
+    "otp_didntReceive":"Vous n'avez rien reçu ?  "
+
+}

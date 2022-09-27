@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "311115419598",
+    "project_id": "anfari-5665e",
+    "storage_bucket": "anfari-5665e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311115419598:android:b57b804b8b46caf1ede59f",
+        "android_client_info": {
+          "package_name": "dz.goudjal.anfari"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "311115419598-sstmrqi8q0332fq5l993hr2glqs5u7tf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpLS0KrkR8130crgR3sKecjQoRAR2yutc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "311115419598-sstmrqi8q0332fq5l993hr2glqs5u7tf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "311115419598-0geu1ecv42ktpitnb4ht3k6j5vj5nstm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.anfari"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
