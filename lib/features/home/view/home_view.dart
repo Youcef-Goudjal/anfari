@@ -13,6 +13,7 @@ class HomeView extends StatelessWidget {
         title: Text(
           LocaleKeys.anfari.tr(),
         ),
+        backgroundColor: Colors.amber,
       ),
     );
   }

@@ -71,6 +71,44 @@ class AuthenticationRepository {
     }
   }
 
+  /// SignIn with Phone number
+  ///
+  /// Throws a [LogInWithPhoneNumberFailure] if an exception occurs.
+  late firebase_auth.ConfirmationResult confirmationResult;
+  late LoginResult result = LoginResult();
+  Future<void> logInWithPhoneNumber({
+    required String phoneNumber,
+    required Function(firebase_auth.PhoneAuthCredential) verificationCompleted,
+    required Function(firebase_auth.FirebaseAuthException) verificationFailed,
+    required Function(String, int?) codeSent,
+    required Function(String) codeAutoRetrievalTimeout,
+  }) async {
+    await _firebaseAuth.verifyPhoneNumber(
+      phoneNumber: "+213$phoneNumber",
+      verificationCompleted: verificationCompleted,
+      verificationFailed: verificationFailed,
+      codeSent: codeSent,
+      codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
+    );
+  }
+
+  /// Signs In with Credential
+  ///
+  /// Throws a [LogInWithCredentialFailure] if an Exception occurs.
+  Future<User?> logInWithCredential({
+    required firebase_auth.AuthCredential credential,
+  }) async {
+    try {
+      final userCredential =
+          await _firebaseAuth.signInWithCredential(credential);
+      return userCredential.user?.toUser;
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      throw LogInWithCredentialFailure.fromCode(e.code);
+    } catch (e) {
+      throw LogInWithCredentialFailure();
+    }
+  }
+
   /// Signs out the current user which will
   /// emit [User.empty] from the [User] stream.
   ///

@@ -1,6 +1,5 @@
 import 'package:anfari/features/auth/boarding/boarding.dart';
 import 'package:anfari/features/auth/login/view/view.dart';
-import 'package:anfari/features/auth/otp/otp.dart';
 import 'package:anfari/features/auth/register/register.dart';
 import 'package:anfari/features/home/home.dart';
 import 'package:anfari/features/splash/splash_view.dart';
@@ -27,10 +26,7 @@ import 'package:auto_route/annotations.dart';
       path: "/register",
       page: RegisterView,
     ),
-    AutoRoute(
-      path: "/otp",
-      page: OtpView,
-    ),
+
     AutoRoute(
       path: "/home",
       page: HomeView,

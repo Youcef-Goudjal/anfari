@@ -73,6 +73,8 @@ class ThemeManager {
         ),
         //scaffoldBackgroundColor: Colors.white,
         primaryColor: primaryColor,
+        hintColor: const Color(0xffF8F8F8),
+
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
           primary: primaryColor,
