@@ -36,6 +36,7 @@ dependencies:
 
   #firebase
   firebase_core: ^1.23.0
+  cloud_firestore: ^3.4.9
 
   #localization
   easy_localization: ^3.0.1
