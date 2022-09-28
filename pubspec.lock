@@ -37,7 +37,7 @@ packages:
     source: path
     version: "1.0.0"
   auto_route:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: auto_route
       url: "https://pub.dartlang.org"

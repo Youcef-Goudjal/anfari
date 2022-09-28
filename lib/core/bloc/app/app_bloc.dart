@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:anfari/core/extensions/extensions.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
@@ -9,13 +10,8 @@ part 'app_event.dart';
 part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
-  AppBloc({required AuthenticationRepository authenticationRepository})
-      : _authenticationRepository = authenticationRepository,
-        super(
-          authenticationRepository.currentUser.isNotEmpty
-              ? AppState.authenticated(authenticationRepository.currentUser)
-              : const AppState.unauthenticated(),
-        ) {
+  AppBloc() : super(const AppState.uninitialized()) {
+    on<AppStarted>(_onAppStarted);
     on<AppUserChanged>(_onUserChanged);
     on<AppLogoutRequested>(_onLogoutRequested);
     _userSubscription = _authenticationRepository.user.listen(
@@ -23,7 +19,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
   }
 
-  final AuthenticationRepository _authenticationRepository;
+  final AuthenticationRepository _authenticationRepository =
+      AuthenticationRepository();
   late final StreamSubscription<User> _userSubscription;
 
   void _onUserChanged(AppUserChanged event, Emitter<AppState> emit) {
@@ -42,5 +39,22 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   Future<void> close() {
     _userSubscription.cancel();
     return super.close();
+  }
+
+  void _onAppStarted(AppStarted event, Emitter<AppState> emit) async {
+    try {
+      // setup settings (get old settings)
+
+      bool isLoggedIn = _authenticationRepository.currentUser.isEmpty;
+      // For display splash screen
+      await Future.delayed(3.seconds);
+      if (isLoggedIn) {
+        emit(AppState.authenticated(_authenticationRepository.currentUser));
+      } else {
+        emit(const AppState.unauthenticated());
+      }
+    } catch (e) {
+      emit(const AppState.unauthenticated());
+    }
   }
 }

@@ -1,8 +1,6 @@
 import 'package:anfari/core/extensions/context_extension.dart';
-import 'package:anfari/core/manager/route/app_router.gr.dart';
 import 'package:anfari/features/auth/login/bloc/phone_auth_bloc.dart';
 import 'package:anfari/features/auth/login/view/otp_form.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,10 +21,10 @@ class LoginPage extends StatelessWidget {
         body: BlocListener<PhoneAuthBloc, PhoneAuthState>(
           listener: (context, state) {
             if (state is PhoneAuthVerified) {
-              context.router.popAndPush(const HomeRoute());
+              // show success snack
             }
 
-            // show error message if any error occurs while verifing phone number and otp code.
+            // show error message if any error occurs while verifying phone number and otp code.
             if (state is PhoneAuthError) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(

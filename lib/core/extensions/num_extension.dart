@@ -19,7 +19,7 @@ extension NumExtension on num {
   /// print(1.5.hours);
   ///```
   Duration get milliseconds => Duration(microseconds: (this * 1000).round());
-  Duration get seconds => Duration(milliseconds: (this * 1000).round());
+  Duration get seconds => Duration(seconds: round());
   Duration get minutes =>
       Duration(seconds: (this * Duration.secondsPerMinute).round());
   Duration get hours =>

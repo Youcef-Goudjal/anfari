@@ -42,8 +42,6 @@ dependencies:
   easy_localization: ^3.0.1
 
   #routing
-  auto_route: ^5.0.1
-
   #state management
   flutter_bloc: ^8.1.1
   equatable: ^2.0.3

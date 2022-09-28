@@ -1,8 +1,7 @@
 import 'package:anfari/core/extensions/extensions.dart';
 import 'package:anfari/core/manager/language/locale_keys.g.dart';
-import 'package:anfari/core/manager/route/app_router.gr.dart';
+import 'package:anfari/core/manager/route/router.dart';
 import 'package:anfari/product/constants/asset_constants.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -290,7 +289,7 @@ class BoardingThree extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  context.router.push(const LoginRoute());
+                  Navigator.pushNamed(context, AppRouter.login);
                 },
                 child: Row(
                   children: [
