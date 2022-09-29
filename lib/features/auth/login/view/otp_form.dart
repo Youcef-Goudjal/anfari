@@ -1,7 +1,6 @@
 import 'package:anfari/core/extensions/extensions.dart';
 import 'package:anfari/features/auth/login/bloc/phone_auth_bloc.dart';
 import 'package:anfari/features/auth/login/login.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,7 +33,7 @@ class OtpForm extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: IconButton(
                 onPressed: () {
-                  context.router.pop();
+                  Navigator.pop(context);
                 },
                 icon: const FaIcon(
                   FontAwesomeIcons.chevronRight,
@@ -108,7 +107,7 @@ class _OtpField extends StatelessWidget {
     const length = 6;
     const borderColor = Color(0xffC9CBCB);
     const errorColor = Color(0xFFB00020);
-    const fillColor = Color(0xffF8F8F8);
+    const fillColor = Color(0xffEFEFEF);
     final defaultPinTheme = PinTheme(
         width: 45.w,
         height: 59.h,

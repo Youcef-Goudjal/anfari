@@ -63,8 +63,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   FutureOr<void> _onProfileUpdated(
       ProfileUpdated event, Emitter<ProfileState> emit) {
     try {
-      _loggedUser = event.updatedUser;
-      emit(ProfileLoaded(event.updatedUser));
+      if (event.updatedUser.isEmpty) {
+        emit(ProfileNotRegistred());
+      } else {
+        _loggedUser = event.updatedUser;
+        emit(ProfileLoaded(event.updatedUser));
+      }
     } catch (e) {
       emit(ProfileLoadFailure(e.toString()));
     }

@@ -1,5 +1,6 @@
 import 'package:anfari/core/extensions/extensions.dart';
 import 'package:anfari/core/manager/language/locale_keys.g.dart';
+import 'package:anfari/core/manager/theme/theme_manager.dart';
 import 'package:anfari/features/auth/login/bloc/phone_auth_bloc.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
@@ -102,37 +103,16 @@ class _UserBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(
-            vertical: 13.h,
-            horizontal: 21.w,
-          ),
-        ),
-        child: Center(
-          child: Row(
-            children: [
-              Text(
-                LocaleKeys.login_userBtn.tr(),
-                style: context.textTheme.headline2!.copyWith(
-                  color: Colors.black,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.right,
-              ),
-              const Spacer(),
-              FaIcon(
-                FontAwesomeIcons.circleCheck,
-                size: 26.w,
-                color: Colors.white,
-              )
-            ],
-          ),
-        ),
-      ),
+    return BlocBuilder<LoginCubit, LoginState>(
+      buildWhen: (previous, current) =>
+          previous.isDeveloper != current.isDeveloper,
+      builder: (context, state) {
+        return KLoginBtn(
+          onPressed: context.read<LoginCubit>().isUserTapped,
+          title: LocaleKeys.login_userBtn.tr(),
+          isActive: !state.isDeveloper,
+        );
+      },
     );
   }
 }
@@ -144,10 +124,41 @@ class _DeveloperBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<LoginCubit, LoginState>(
+      buildWhen: (previous, current) =>
+          previous.isDeveloper != current.isDeveloper,
+      builder: (context, state) {
+        return KLoginBtn(
+          onPressed: context.read<LoginCubit>().isDeveloperTapped,
+          title: LocaleKeys.login_developerBtn.tr(),
+          isActive: state.isDeveloper,
+        );
+      },
+    );
+  }
+}
+
+class KLoginBtn extends StatelessWidget {
+  final void Function()? onPressed;
+  final bool isActive;
+  final String title;
+  final IconData? icon;
+  const KLoginBtn({
+    super.key,
+    required this.onPressed,
+    this.isActive = false,
+    required this.title,
+    this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
+          backgroundColor:
+              isActive ? ThemeManager.primaryColor : const Color(0xffEFEFEF),
           padding: EdgeInsets.symmetric(
             vertical: 13.h,
             horizontal: 21.w,
@@ -157,7 +168,7 @@ class _DeveloperBtn extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                LocaleKeys.login_developerBtn.tr(),
+                title,
                 style: context.textTheme.headline2!.copyWith(
                   color: Colors.black,
                   fontSize: 16.sp,
@@ -167,9 +178,11 @@ class _DeveloperBtn extends StatelessWidget {
               ),
               const Spacer(),
               FaIcon(
-                FontAwesomeIcons.circleCheck,
+                isActive
+                    ? FontAwesomeIcons.circleCheck
+                    : FontAwesomeIcons.circle,
                 size: 26.w,
-                color: Colors.white,
+                color: isActive ? Colors.white : Colors.black,
               )
             ],
           ),
@@ -215,28 +228,25 @@ class _PhoneInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.ltr,
-      child: SizedBox(
-        height: 61.h,
-        child: BlocBuilder<LoginCubit, LoginState>(
-          buildWhen: (previous, current) => previous.phone != current.phone,
-          builder: (context, state) {
-            return TextField(
-              style: context.textTheme.headline4!.copyWith(
-                fontSize: 20,
+      child: BlocBuilder<LoginCubit, LoginState>(
+        buildWhen: (previous, current) => previous.phone != current.phone,
+        builder: (context, state) {
+          return TextField(
+            style: context.textTheme.headline4!.copyWith(
+              fontSize: 20,
+            ),
+            onChanged: (phone) =>
+                context.read<LoginCubit>().phoneChanged(phone),
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 23.w,
+                vertical: 15.h,
               ),
-              onChanged: (phone) =>
-                  context.read<LoginCubit>().phoneChanged(phone),
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 23.w,
-                  vertical: 15.h,
-                ),
-                prefixText: "+213",
-                errorText: state.phone.invalid ? "invalid phone number" : null,
-              ),
-            );
-          },
-        ),
+              prefixText: "+213",
+              errorText: state.phone.invalid ? "invalid phone number" : null,
+            ),
+          );
+        },
       ),
     );
   }

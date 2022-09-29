@@ -57,8 +57,25 @@ class ThemeManager {
             borderRadius: BorderRadius.circular(20.r),
             borderSide: BorderSide.none,
           ),
+          hintStyle: GoogleFonts.cairo(
+            color: const Color(0xffB1B1B1),
+            fontSize: 11.sp,
+            fontWeight: FontWeight.bold,
+          ),
           filled: true,
-          fillColor: const Color(0xffF8F8F8).withOpacity(0.7),
+          fillColor: const Color(0xffEFEFEF),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20.r),
+            borderSide: const BorderSide(color: Color(0xFFB00020)),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20.r),
+            borderSide: const BorderSide(color: Color(0xffF8F8F8)),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20.r),
+            borderSide: const BorderSide(color: Color(0xffF8F8F8)),
+          ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.r),
             borderSide: const BorderSide(color: primaryColor),
@@ -73,7 +90,7 @@ class ThemeManager {
         ),
         //scaffoldBackgroundColor: Colors.white,
         primaryColor: primaryColor,
-        hintColor: const Color(0xffF8F8F8),
+        hintColor: const Color(0xffB1B1B1),
 
         colorScheme: const ColorScheme(
           brightness: Brightness.light,

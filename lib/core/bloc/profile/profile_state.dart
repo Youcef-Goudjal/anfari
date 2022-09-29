@@ -9,6 +9,8 @@ abstract class ProfileState extends Equatable {
 
 class ProfileLoading extends ProfileState {}
 
+class ProfileNotRegistred extends ProfileState {}
+
 class ProfileLoaded extends ProfileState {
   final User loggedUser;
 
