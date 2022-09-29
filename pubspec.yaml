@@ -36,7 +36,7 @@ dependencies:
 
   #firebase
   firebase_core: ^1.23.0
-  cloud_firestore: ^3.4.9
+  
 
   #localization
   easy_localization: ^3.0.1
@@ -63,6 +63,8 @@ dependencies:
     path: packages/form_inputs
   authentication_repository:
     path: packages/authentication_repository
+  user_repository:
+    path: packages/user_repository
 
   meta: ^1.7.0
   flutter_svg: ^1.1.5
@@ -70,6 +72,7 @@ dependencies:
   pinput: ^2.2.12
   flow_builder: ^0.0.9
   shared_preferences: ^2.0.15
+  get_it: ^7.2.0
 
 dev_dependencies:
   flutter_test:

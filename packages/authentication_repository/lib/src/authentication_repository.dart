@@ -1,6 +1,7 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:cache/cache.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:user_repository/user_repository.dart';
 
 /// Repository which manages user authentication
 class AuthenticationRepository {
@@ -74,8 +75,6 @@ class AuthenticationRepository {
   /// SignIn with Phone number
   ///
   /// Throws a [LogInWithPhoneNumberFailure] if an exception occurs.
-  late firebase_auth.ConfirmationResult confirmationResult;
-  late LoginResult result = LoginResult();
   Future<void> logInWithPhoneNumber({
     required String phoneNumber,
     required Function(firebase_auth.PhoneAuthCredential) verificationCompleted,

@@ -8,12 +8,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
+import 'package:user_repository/user_repository.dart';
 
 import 'core/bloc/bloc.dart';
 import 'core/configs/application.dart';
 import 'core/manager/language/language_manager.dart';
 import 'core/utils/bloc_observer.dart';
 import 'product/constants/string_constants.dart';
+
+final getIt = GetIt.instance;
+
+void setup() {
+  getIt.registerSingleton(AuthenticationRepository());
+  getIt.registerSingleton<UserRepository>(FirebaseUserRepository());
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +31,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  setup();
   await EasyLocalization.ensureInitialized();
   runApp(const MyApp());
 }
@@ -39,20 +49,14 @@ class MyApp extends StatelessWidget {
       useOnlyLangCode: true,
       fallbackLocale: LanguageManager.instance.ar,
       child: ScreenUtilInit(
-          designSize: const Size(428, 926),
-          builder: (context, child) {
-            return RepositoryProvider.value(
-              value: AuthenticationRepository(),
-              child: Builder(
-                builder: (context) {
-                  return MultiBlocProvider(
-                    providers: CommonBloc.blocProviders,
-                    child: const Anfari(),
-                  );
-                },
-              ),
-            );
-          }),
+        designSize: const Size(428, 926),
+        builder: (context, child) {
+          return MultiBlocProvider(
+            providers: CommonBloc.blocProviders,
+            child: const Anfari(),
+          );
+        },
+      ),
     );
   }
 }
@@ -87,6 +91,7 @@ class _AnfariState extends State<Anfari> {
 
   void loadData() {
     // Only load data when authenticated
+    context.read<ProfileBloc>().add(LoadProfile());
   }
 
   @override

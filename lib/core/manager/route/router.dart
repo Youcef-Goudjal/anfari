@@ -1,4 +1,3 @@
-import 'package:anfari/core/bloc/app/app_bloc.dart';
 import 'package:anfari/features/auth/boarding/views/boarding_view.dart';
 import 'package:anfari/features/auth/login/view/view.dart';
 import 'package:anfari/features/auth/register/views/register_view.dart';
@@ -36,20 +35,6 @@ class AppRouter {
             ),
           ),
         );
-    }
-  }
-
-  static List<Page<dynamic>> onGenerateAppViewPages(
-    AppStatus state,
-    List<Page<dynamic>> pages,
-  ) {
-    switch (state) {
-      case AppStatus.authenticated:
-        return [HomePage.page()];
-      case AppStatus.unInitialized:
-        return [BoardingPage.page()];
-      default:
-        return [SplashPage.page()];
     }
   }
 

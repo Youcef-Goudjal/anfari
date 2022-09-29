@@ -9,6 +9,8 @@ environment:
 dependencies:
   cache:
     path: ../cache
+  user_repository:
+    path: ../user_repository
   equatable: ^2.0.3
   firebase_auth: ^3.6.2
   firebase_core: ^1.20.0

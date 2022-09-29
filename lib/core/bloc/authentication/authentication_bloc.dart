@@ -4,6 +4,7 @@ import 'package:anfari/core/extensions/extensions.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:user_repository/user_repository.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
