@@ -5,8 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/manager/language/locale_keys.g.dart';
 
-class SplashView extends StatelessWidget {
-  const SplashView({super.key});
+class SplashPage extends StatelessWidget {
+  const SplashPage({super.key});
+
+  static Page<void> page() => const MaterialPage(child: SplashPage());
 
   @override
   Widget build(BuildContext context) {

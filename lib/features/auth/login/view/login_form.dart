@@ -1,7 +1,6 @@
 import 'package:anfari/core/extensions/extensions.dart';
 import 'package:anfari/core/manager/language/locale_keys.g.dart';
 import 'package:anfari/features/auth/login/bloc/phone_auth_bloc.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -84,7 +83,7 @@ class _BackBtn extends StatelessWidget {
       alignment: Alignment.centerRight,
       child: IconButton(
         onPressed: () {
-          context.router.pop();
+          Navigator.pop(context);
         },
         icon: const FaIcon(
           FontAwesomeIcons.chevronRight,

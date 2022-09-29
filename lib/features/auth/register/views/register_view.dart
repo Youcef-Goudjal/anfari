@@ -6,8 +6,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../core/manager/language/locale_keys.g.dart';
 
-class RegisterView extends StatelessWidget {
-  const RegisterView({super.key});
+class RegisterPage extends StatelessWidget {
+  static Page<void> page() => const MaterialPage(child: RegisterPage());
+
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {

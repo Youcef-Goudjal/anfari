@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../login.dart';
 
 class LoginPage extends StatelessWidget {
+  static Page<void> page() => const MaterialPage(child: LoginPage());
+
   const LoginPage({super.key});
 
   @override

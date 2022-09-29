@@ -8,14 +8,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class BoardingView extends StatefulWidget {
-  const BoardingView({super.key});
+class BoardingPage extends StatefulWidget {
+  static Page<void> page() => const MaterialPage(child: BoardingPage());
+
+  const BoardingPage({super.key});
 
   @override
-  State<BoardingView> createState() => _BoardingViewState();
+  State<BoardingPage> createState() => _BoardingPageState();
 }
 
-class _BoardingViewState extends State<BoardingView> {
+class _BoardingPageState extends State<BoardingPage> {
   final PageController _pageController = PageController();
 
   @override

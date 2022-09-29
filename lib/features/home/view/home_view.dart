@@ -1,10 +1,14 @@
+import 'package:anfari/core/bloc/authentication/authentication_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/manager/language/locale_keys.g.dart';
 
-class HomeView extends StatelessWidget {
-  const HomeView({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  static Page<void> page() => const MaterialPage(child: HomePage());
+
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +17,19 @@ class HomeView extends StatelessWidget {
         title: Text(
           LocaleKeys.anfari.tr(),
         ),
-        backgroundColor: Colors.amber,
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.read<AuthenticationBloc>().add(LoggedOut());
+            },
+            icon: const Icon(
+              Icons.logout,
+              color: Colors.red,
+            ),
+          )
+        ],
       ),
+      backgroundColor: Colors.amber,
     );
   }
 }

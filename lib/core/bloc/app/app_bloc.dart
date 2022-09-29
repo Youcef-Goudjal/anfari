@@ -10,7 +10,9 @@ part 'app_event.dart';
 part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
-  AppBloc() : super(const AppState.uninitialized()) {
+  AppBloc(
+    this._authenticationRepository,
+  ) : super(const AppState.uninitialized()) {
     on<AppStarted>(_onAppStarted);
     on<AppUserChanged>(_onUserChanged);
     on<AppLogoutRequested>(_onLogoutRequested);
@@ -19,8 +21,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
   }
 
-  final AuthenticationRepository _authenticationRepository =
-      AuthenticationRepository();
+  final AuthenticationRepository _authenticationRepository;
+
   late final StreamSubscription<User> _userSubscription;
 
   void _onUserChanged(AppUserChanged event, Emitter<AppState> emit) {
@@ -45,7 +47,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     try {
       // setup settings (get old settings)
 
-      bool isLoggedIn = _authenticationRepository.currentUser.isEmpty;
+      bool isLoggedIn = _authenticationRepository.currentUser.isNotEmpty;
       // For display splash screen
       await Future.delayed(3.seconds);
       if (isLoggedIn) {

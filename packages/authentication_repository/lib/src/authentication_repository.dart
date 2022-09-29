@@ -122,6 +122,8 @@ class AuthenticationRepository {
       throw LogOutFailure();
     }
   }
+
+  bool isLoggedIn() => _firebaseAuth.currentUser != null;
 }
 
 extension on firebase_auth.User {

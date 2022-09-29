@@ -1,3 +1,4 @@
+import 'package:anfari/core/bloc/app/app_bloc.dart';
 import 'package:anfari/features/auth/boarding/views/boarding_view.dart';
 import 'package:anfari/features/auth/login/view/view.dart';
 import 'package:anfari/features/auth/register/views/register_view.dart';
@@ -6,6 +7,7 @@ import 'package:anfari/features/splash/splash_view.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
+  static const root = "/";
   static const splash = "/splash";
   static const login = "/login";
   static const register = "/register";
@@ -14,17 +16,18 @@ class AppRouter {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case root:
       case splash:
-        return MaterialPageRoute(builder: (_) => const SplashView());
+        return MaterialPageRoute(builder: (_) => const SplashPage());
       case login:
         return MaterialPageRoute(builder: (_) => const LoginPage());
       case register:
-        return MaterialPageRoute(builder: (_) => const RegisterView());
+        return MaterialPageRoute(builder: (_) => const RegisterPage());
       case home:
-        return MaterialPageRoute(builder: (_) => const HomeView());
+        return MaterialPageRoute(builder: (_) => const HomePage());
 
       case boarding:
-        return MaterialPageRoute(builder: (_) => const BoardingView());
+        return MaterialPageRoute(builder: (_) => const BoardingPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
@@ -33,6 +36,20 @@ class AppRouter {
             ),
           ),
         );
+    }
+  }
+
+  static List<Page<dynamic>> onGenerateAppViewPages(
+    AppStatus state,
+    List<Page<dynamic>> pages,
+  ) {
+    switch (state) {
+      case AppStatus.authenticated:
+        return [HomePage.page()];
+      case AppStatus.unInitialized:
+        return [BoardingPage.page()];
+      default:
+        return [SplashPage.page()];
     }
   }
 

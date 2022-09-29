@@ -1,23 +1,26 @@
-import 'package:anfari/core/bloc/app/app_bloc.dart';
+import 'package:anfari/core/bloc/application/application_bloc.dart';
+import 'package:anfari/core/bloc/authentication/authentication_bloc.dart';
+import 'package:anfari/core/bloc/language/language_bloc.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CommonBloc {
-  /// Bloc
-  static final AppBloc appBloc = AppBloc();
+  //Bloc
+  static final applicationBloc = ApplicationBloc();
+  static final authenticationBloc = AuthenticationBloc(
+    AuthenticationRepository(),
+  );
+  static final languageBloc = LanguageBloc();
 
-  static final List<BlocProvider> blocProviders = [
-    BlocProvider<AppBloc>(create: (context) => appBloc),
-  ];
-
+  static List<BlocProvider> get blocProviders => [
+        BlocProvider<ApplicationBloc>(create: (context) => applicationBloc),
+        BlocProvider<AuthenticationBloc>(
+            create: (context) => authenticationBloc),
+        BlocProvider<LanguageBloc>(create: (context) => languageBloc),
+      ];
   static void dispose() {
-    appBloc.close();
+    applicationBloc.close();
+    authenticationBloc.close();
+    languageBloc.close();
   }
-
-  /// Singleton factory
-  static final CommonBloc _instance = CommonBloc._internal();
-
-  factory CommonBloc() {
-    return _instance;
-  }
-  CommonBloc._internal();
 }
