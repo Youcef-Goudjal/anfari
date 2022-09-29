@@ -22,6 +22,7 @@
     "otp_desc":"Un code à 6 chiffres a été envoyé à votre téléphone.",
     "otp_verifyBtn":"vérification",
     "otp_resend":"Re-transmetter",
-    "otp_didntReceive":"Vous n'avez rien reçu ?  "
+    "otp_didntReceive":"Vous n'avez rien reçu ?  ",
+    "home_welcome":"bienvenu {name}"
 
 }

@@ -34,12 +34,20 @@ class FirebaseUserRepository implements UserRepository {
   /// Update a doc in users collection
   /// [updatedUser] is updated data of user
   @override
-  Future<void> updateUserData(User updatedUser) async {
+  Future<void> updateUserData(
+    User updatedUser, {
+    Map<String, dynamic>? additionalData,
+  }) async {
     await _userCollection.doc(updatedUser.id).get().then(
       (doc) async {
+        Map<String, dynamic> data = updatedUser.toJson();
+
+        if (additionalData != null) data.addAll(additionalData);
         if (doc.exists) {
           // update
-          await doc.reference.update(updatedUser.toJson());
+          await doc.reference.update(data);
+        } else {
+          await doc.reference.set(data);
         }
       },
     );

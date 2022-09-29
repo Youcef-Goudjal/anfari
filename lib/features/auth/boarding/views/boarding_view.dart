@@ -18,6 +18,24 @@ class BoardingPage extends StatefulWidget {
 }
 
 class _BoardingPageState extends State<BoardingPage> {
+  late ImageProvider boarding1, boarding2, boarding3;
+  @override
+  void initState() {
+    super.initState();
+    boarding1 = const AssetImage(AppAssets.boarding1);
+    boarding2 = const AssetImage(AppAssets.boarding2);
+    boarding3 = const AssetImage(AppAssets.boarding3);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    precacheImage(boarding1, context);
+    precacheImage(boarding2, context);
+    precacheImage(boarding3, context);
+  }
+
   final PageController _pageController = PageController();
 
   @override
@@ -28,6 +46,7 @@ class _BoardingPageState extends State<BoardingPage> {
           controller: _pageController,
           children: [
             BoardingOne(
+              image: boarding1,
               function: () {
                 _pageController.animateToPage(
                   1,
@@ -37,6 +56,7 @@ class _BoardingPageState extends State<BoardingPage> {
               },
             ),
             BoardingTwo(
+              image: boarding2,
               function: () {
                 _pageController.animateToPage(
                   2,
@@ -45,7 +65,9 @@ class _BoardingPageState extends State<BoardingPage> {
                 );
               },
             ),
-            const BoardingThree(),
+            BoardingThree(
+              image: boarding3,
+            ),
           ],
         ),
       ],
@@ -55,7 +77,8 @@ class _BoardingPageState extends State<BoardingPage> {
 
 class BoardingOne extends StatelessWidget {
   final Function function;
-  const BoardingOne({super.key, required this.function});
+  final ImageProvider image;
+  const BoardingOne({super.key, required this.function, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +86,7 @@ class BoardingOne extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 52.w),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: const AssetImage(
-            AppAssets.boarding1,
-          ),
+          image: image,
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
             Colors.black.withOpacity(0.67),
@@ -132,8 +153,9 @@ class BoardingOne extends StatelessWidget {
 }
 
 class BoardingTwo extends StatelessWidget {
+  final ImageProvider image;
   final Function function;
-  const BoardingTwo({super.key, required this.function});
+  const BoardingTwo({super.key, required this.function, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -141,9 +163,7 @@ class BoardingTwo extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 52.w),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: const AssetImage(
-            AppAssets.boarding2,
-          ),
+          image: image,
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
             Colors.black.withOpacity(0.67),
@@ -210,7 +230,8 @@ class BoardingTwo extends StatelessWidget {
 }
 
 class BoardingThree extends StatelessWidget {
-  const BoardingThree({super.key});
+  final ImageProvider image;
+  const BoardingThree({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -218,9 +239,7 @@ class BoardingThree extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 52.w),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: const AssetImage(
-            AppAssets.boarding3,
-          ),
+          image: image,
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
             Colors.black.withOpacity(0.67),

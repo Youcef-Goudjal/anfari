@@ -17,5 +17,8 @@ abstract class UserRepository {
 
   /// Update a doc in users collection
   /// [updatedUser] is updated data of user
-  Future<void> updateUserData(User updatedUser);
+  Future<void> updateUserData(
+    User updatedUser, {
+    Map<String, dynamic> additionalData,
+  });
 }

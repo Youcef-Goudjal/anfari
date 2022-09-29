@@ -12,7 +12,7 @@ class LoadProfile extends ProfileEvent {}
 
 /// Upload user avatar
 class UploadAvatar extends ProfileEvent {
-  final File imageFile;
+  final Uint8List imageFile;
 
   const UploadAvatar(this.imageFile);
   @override

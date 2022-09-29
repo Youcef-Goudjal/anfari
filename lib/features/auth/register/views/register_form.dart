@@ -1,5 +1,8 @@
+import 'package:anfari/core/bloc/bloc.dart';
 import 'package:anfari/core/extensions/extensions.dart';
+import 'package:anfari/core/manager/theme/theme_manager.dart';
 import 'package:anfari/features/auth/register/cubit/register_cubit.dart';
+import 'package:anfari/product/constants/asset_constants.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,35 +18,43 @@ class RegisterForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 43.w,
-          vertical: 55.h,
-        ),
-        child: Center(
-          child: Column(
-            children: [
-              24.h.heightBox,
-              Text(
-                LocaleKeys.register_title.tr(),
-                style: context.textTheme.headline1!.copyWith(
-                  color: Colors.black,
+    return BlocListener<RegisterCubit, RegisterState>(
+      listenWhen: (previous, current) => previous.file != current.file,
+      listener: (context, state) {
+        if (state.file != null) {
+          context.read<ProfileBloc>().add(UploadAvatar(state.file!));
+        }
+      },
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 43.w,
+            vertical: 55.h,
+          ),
+          child: Center(
+            child: Column(
+              children: [
+                24.h.heightBox,
+                Text(
+                  LocaleKeys.register_title.tr(),
+                  style: context.textTheme.headline1!.copyWith(
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              28.h.heightBox,
-              const AvatarWidget(),
-              34.h.heightBox,
-              const _UsernameField(),
-              26.h.heightBox,
-              const _UniversityField(),
-              26.h.heightBox,
-              const _FacultyField(),
-              26.h.heightBox,
-              const _SpecialityField(),
-              32.h.heightBox,
-              const _SaveBtn(),
-            ],
+                28.h.heightBox,
+                const AvatarWidget(),
+                34.h.heightBox,
+                const _UsernameField(),
+                26.h.heightBox,
+                const _UniversityField(),
+                26.h.heightBox,
+                const _FacultyField(),
+                26.h.heightBox,
+                const _SpecialityField(),
+                32.h.heightBox,
+                const _SaveBtn(),
+              ],
+            ),
           ),
         ),
       ),
@@ -62,7 +73,10 @@ class _SaveBtn extends StatelessWidget {
       height: 60.h,
       child: ElevatedButton(
         onPressed: () {
-          //TODO: save data
+          context
+              .read<RegisterCubit>()
+              .save(context.read<ProfileBloc>().loggedUser);
+          Navigator.pop(context);
         },
         child: Center(
           child: Text(
@@ -174,7 +188,7 @@ class _UsernameField extends StatelessWidget {
       buildWhen: (previous, current) => previous.username != current.username,
       builder: (context, state) {
         return KTextField(
-          title: LocaleKeys.register_special.tr(),
+          title: LocaleKeys.register_username.tr(),
           icon: FontAwesomeIcons.user,
           onChanged: context.read<RegisterCubit>().usernameChanged,
         );
@@ -206,23 +220,27 @@ class AvatarWidget extends StatelessWidget {
                 clipBehavior: Clip.none,
                 children: [
                   Container(
-                    decoration: const BoxDecoration(
+                    width: 170.w,
+                    height: 170.h,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: (state.imageUrl.isNotEmpty)
+                            ? NetworkImage(
+                                state.imageUrl,
+                              )
+                            : (state.file != null)
+                                ? MemoryImage(
+                                    state.file!,
+                                  )
+                                : const AssetImage(
+                                    AppAssets.person,
+                                  ) as ImageProvider,
+                      ),
                       shape: BoxShape.circle,
-                      // border: Border.all(color: Colors.white, width: 2),
-                    ),
-                    child: CircleAvatar(
-                      radius: 199.w,
-                      backgroundColor: const Color(0xffF5F5F5),
-                      child: (state.imageUrl.isNotEmpty)
-                          ? Image.network(state.imageUrl)
-                          : (state.file != null)
-                              ? Image.file(state.file!)
-                              : FaIcon(
-                                  Icons.person,
-                                  size: 170.h,
-                                  color:
-                                      const Color(0xff666666).withOpacity(0.2),
-                                ),
+                      border: Border.all(
+                        color: ThemeManager.primaryColor,
+                        width: 2,
+                      ),
                     ),
                   ),
                   Positioned(

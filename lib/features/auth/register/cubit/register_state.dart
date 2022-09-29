@@ -14,7 +14,7 @@ class RegisterState extends Equatable {
 
   final Username username;
   final String university, faculty, speciality;
-  final File? file;
+  final Uint8List? file;
   final String imageUrl;
   final FormzStatus status;
   final String? errorMessage;
@@ -27,7 +27,7 @@ class RegisterState extends Equatable {
     String? faculty,
     String? speciality,
     String? imageUrl,
-    File? file,
+    Uint8List? file,
     FormzStatus? status,
     String? errorMessage,
   }) =>

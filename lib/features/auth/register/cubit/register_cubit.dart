@@ -1,14 +1,19 @@
-import 'dart:io';
-
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:user_repository/user_repository.dart';
 
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  RegisterCubit() : super(const RegisterState());
+  ImagePicker picker = ImagePicker();
+  final UserRepository _userRepository;
+  RegisterCubit(UserRepository repository)
+      : _userRepository = repository,
+        super(const RegisterState());
 
   void usernameChanged(String value) {
     final username = Username.dirty(value: value);
@@ -38,7 +43,29 @@ class RegisterCubit extends Cubit<RegisterState> {
     ));
   }
 
-  void pickImage() {
+  void pickImage() async {
     print("piking image");
+
+    final file = await picker.pickImage(source: ImageSource.gallery);
+    if (file != null) {
+      emit(
+        state.copyWith(
+          file: await file.readAsBytes(),
+        ),
+      );
+    }
+  }
+
+  Future<void> save(User currentUser) async {
+    await _userRepository.updateUserData(
+      currentUser.copyWith(
+        name: state.username.value,
+      ),
+      additionalData: {
+        "University": state.university,
+        "Faculty": state.faculty,
+        "Speciality": state.speciality,
+      },
+    );
   }
 }

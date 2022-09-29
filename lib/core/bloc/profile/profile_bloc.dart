@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:storage_repository/storage_repository.dart';
 import 'package:user_repository/user_repository.dart';
@@ -15,7 +15,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final UserRepository _userRepository;
   final StorageRepository _storageRepository;
   StreamSubscription? _profileStreamSub;
-  User? _loggedUser;
+  User loggedUser;
 
   ProfileBloc(
     AuthenticationRepository authenticationRepository,
@@ -24,6 +24,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   )   : _authenticationRepository = authenticationRepository,
         _userRepository = userRepository,
         _storageRepository = storageRepository,
+        loggedUser = User(id: authenticationRepository.currentUser.id),
         super(ProfileLoading()) {
     on<LoadProfile>(_onLoadProfile);
     on<UploadAvatar>(_onUploadAvatar);
@@ -50,14 +51,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       UploadAvatar event, Emitter<ProfileState> emit) async {
     try {
       // Get image url from firebase storage
-      String imageUrl = await _storageRepository.uploadFile(
-        "users/profile/${_loggedUser!.id}",
+      String imageUrl = await _storageRepository.uploadImageData(
+        "users/profile/${loggedUser.id}",
         event.imageFile,
       );
       // update the user
-      var updatedUser = _loggedUser!.copyWith(photo: imageUrl);
+      var updatedUser = loggedUser.copyWith(photo: imageUrl);
       await _userRepository.updateUserData(updatedUser);
-    } catch (e) {}
+    } catch (e) {
+      print("profile bloc error uploading ");
+      emit(ProfileLoadFailure(e.toString()));
+    }
   }
 
   FutureOr<void> _onProfileUpdated(
@@ -66,7 +70,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       if (event.updatedUser.isEmpty) {
         emit(ProfileNotRegistred());
       } else {
-        _loggedUser = event.updatedUser;
+        loggedUser = event.updatedUser;
         emit(ProfileLoaded(event.updatedUser));
       }
     } catch (e) {
@@ -76,7 +80,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   @override
   Future<void> close() {
-    _loggedUser = null;
+    loggedUser = User.empty;
     _profileStreamSub?.cancel();
     return super.close();
   }

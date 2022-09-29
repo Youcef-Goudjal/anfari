@@ -22,5 +22,6 @@
     "otp_desc":"تمـ إرسال رمز مكون من 6 أرقامـ إلى هاتفك",
     "otp_verifyBtn":"تحقق",
     "otp_resend":"إعادة الارسال",
-    "otp_didntReceive":"لم تتلقى شيئا ؟ "
+    "otp_didntReceive":"لم تتلقى شيئا ؟ ",
+    "home_welcome":"أهلا {name}"
 }

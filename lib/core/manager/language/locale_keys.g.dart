@@ -25,5 +25,6 @@ abstract class  LocaleKeys {
   static const otp_verifyBtn = 'otp_verifyBtn';
   static const otp_resend = 'otp_resend';
   static const otp_didntReceive = 'otp_didntReceive';
+  static const home_welcome = 'home_welcome';
 
 }
