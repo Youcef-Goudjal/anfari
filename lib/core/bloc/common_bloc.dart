@@ -2,6 +2,7 @@ import 'package:anfari/core/bloc/bloc.dart';
 import 'package:anfari/main.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:storage_repository/storage_repository.dart';
 import 'package:user_repository/user_repository.dart';
 
 class CommonBloc {
@@ -14,6 +15,7 @@ class CommonBloc {
   static final profileBloc = ProfileBloc(
     getIt<AuthenticationRepository>(),
     getIt<UserRepository>(),
+    getIt<StorageRepository>(),
   );
 
   static List<BlocProvider> get blocProviders => [

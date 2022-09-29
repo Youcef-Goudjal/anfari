@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:storage_repository/storage_repository.dart';
 import 'package:user_repository/user_repository.dart';
 
 part 'profile_event.dart';
@@ -12,14 +13,17 @@ part 'profile_state.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final AuthenticationRepository _authenticationRepository;
   final UserRepository _userRepository;
+  final StorageRepository _storageRepository;
   StreamSubscription? _profileStreamSub;
   User? _loggedUser;
 
   ProfileBloc(
     AuthenticationRepository authenticationRepository,
     UserRepository userRepository,
+    StorageRepository storageRepository,
   )   : _authenticationRepository = authenticationRepository,
         _userRepository = userRepository,
+        _storageRepository = storageRepository,
         super(ProfileLoading()) {
     on<LoadProfile>(_onLoadProfile);
     on<UploadAvatar>(_onUploadAvatar);
@@ -41,8 +45,20 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
+  /// load the user avar then update the user
   FutureOr<void> _onUploadAvatar(
-      UploadAvatar event, Emitter<ProfileState> emit) {}
+      UploadAvatar event, Emitter<ProfileState> emit) async {
+    try {
+      // Get image url from firebase storage
+      String imageUrl = await _storageRepository.uploadFile(
+        "users/profile/${_loggedUser!.id}",
+        event.imageFile,
+      );
+      // update the user
+      var updatedUser = _loggedUser!.copyWith(photo: imageUrl);
+      await _userRepository.updateUserData(updatedUser);
+    } catch (e) {}
+  }
 
   FutureOr<void> _onProfileUpdated(
       ProfileUpdated event, Emitter<ProfileState> emit) {

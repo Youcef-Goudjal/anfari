@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
+import 'package:storage_repository/storage_repository.dart';
 import 'package:user_repository/user_repository.dart';
 
 import 'core/bloc/bloc.dart';
@@ -22,6 +23,7 @@ final getIt = GetIt.instance;
 void setup() {
   getIt.registerSingleton(AuthenticationRepository());
   getIt.registerSingleton<UserRepository>(FirebaseUserRepository());
+  getIt.registerSingleton<StorageRepository>(FirebaseStorageImpl());
 }
 
 void main() async {

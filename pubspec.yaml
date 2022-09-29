@@ -65,6 +65,8 @@ dependencies:
     path: packages/authentication_repository
   user_repository:
     path: packages/user_repository
+  storage_repository:
+    path: packages/storage_repository
 
   meta: ^1.7.0
   flutter_svg: ^1.1.5
