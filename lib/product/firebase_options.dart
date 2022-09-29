@@ -25,7 +25,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -44,40 +47,30 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDMJGItlpx9IUt5fCfZlSOcEaF0_sLT2CM',
-    appId: '1:311115419598:web:4d6e46fbf70da833ede59f',
-    messagingSenderId: '311115419598',
-    projectId: 'anfari-5665e',
-    authDomain: 'anfari-5665e.firebaseapp.com',
-    storageBucket: 'anfari-5665e.appspot.com',
-    measurementId: 'G-KTFVV4P85C',
+    apiKey: 'AIzaSyDG_fkcj9O6cj5swwTy-XI1S_k00u3kFio',
+    appId: '1:459638878844:web:758a3a1ed37ea728a90ff9',
+    messagingSenderId: '459638878844',
+    projectId: 'anfari-44444',
+    authDomain: 'anfari-44444.firebaseapp.com',
+    storageBucket: 'anfari-44444.appspot.com',
+    measurementId: 'G-4YX3E2D4MW',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBpLS0KrkR8130crgR3sKecjQoRAR2yutc',
-    appId: '1:311115419598:android:b57b804b8b46caf1ede59f',
-    messagingSenderId: '311115419598',
-    projectId: 'anfari-5665e',
-    storageBucket: 'anfari-5665e.appspot.com',
+    apiKey: 'AIzaSyDJPAo-IIAQQh1VxS1e5rMpUe2NZmuMBpU',
+    appId: '1:459638878844:android:20cf9fd58d0af9f7a90ff9',
+    messagingSenderId: '459638878844',
+    projectId: 'anfari-44444',
+    storageBucket: 'anfari-44444.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCvcvsMsJNquozE-nTUzgZkm_qJrixVSMA',
-    appId: '1:311115419598:ios:c989cd7a7c0932adede59f',
-    messagingSenderId: '311115419598',
-    projectId: 'anfari-5665e',
-    storageBucket: 'anfari-5665e.appspot.com',
-    iosClientId: '311115419598-6vm1e4v9ooo24uj73nko8o4519a2niio.apps.googleusercontent.com',
-    iosBundleId: 'dz.goudjal.anfari',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCvcvsMsJNquozE-nTUzgZkm_qJrixVSMA',
-    appId: '1:311115419598:ios:c989cd7a7c0932adede59f',
-    messagingSenderId: '311115419598',
-    projectId: 'anfari-5665e',
-    storageBucket: 'anfari-5665e.appspot.com',
-    iosClientId: '311115419598-6vm1e4v9ooo24uj73nko8o4519a2niio.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAUCWVfTbL4LkrXyJWBcZUkNzaXmOqQPaQ',
+    appId: '1:459638878844:ios:310f75bf1159ca35a90ff9',
+    messagingSenderId: '459638878844',
+    projectId: 'anfari-44444',
+    storageBucket: 'anfari-44444.appspot.com',
+    iosClientId: '459638878844-k3vf0j89bi9qhktdcipjmilvkd5bsqv5.apps.googleusercontent.com',
     iosBundleId: 'dz.goudjal.anfari',
   );
 }

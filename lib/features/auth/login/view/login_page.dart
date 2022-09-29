@@ -1,6 +1,7 @@
 import 'package:anfari/core/extensions/context_extension.dart';
 import 'package:anfari/features/auth/login/bloc/phone_auth_bloc.dart';
 import 'package:anfari/features/auth/login/view/otp_form.dart';
+import 'package:anfari/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,7 +18,7 @@ class LoginPage extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => LoginCubit()),
         BlocProvider(create: (context) => OtpCubit()),
-        BlocProvider(create: (context) => PhoneAuthBloc(context.read())),
+        BlocProvider(create: (context) => PhoneAuthBloc(getIt())),
       ],
       child: Scaffold(
         body: BlocListener<PhoneAuthBloc, PhoneAuthState>(
