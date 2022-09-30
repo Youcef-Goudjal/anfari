@@ -80,6 +80,7 @@ dependencies:
   meta: ^1.7.0
   flutter_svg: ^1.1.5
   cached_network_image: ^3.2.2
+  anim_search_bar: ^2.0.2
   
   
   
