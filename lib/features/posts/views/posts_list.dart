@@ -37,16 +37,17 @@ class _PostsListState extends State<PostsList> {
               );
             } else {
               return ListView.builder(
-                itemCount: state.hasReachedMax
+                /*    itemCount: state.hasReachedMax
                     ? state.posts.length
-                    : state.posts.length + 1,
+                    : state.posts.length + 1, */
                 controller: _scrollController,
                 itemBuilder: (context, index) {
-                  return index >= state.posts.length
+                  /* return index >= state.posts.length
                       ? const BottomLoader()
                       : PostCard(
                           post: state.posts[index],
-                        );
+                        ); */
+                  return PostCard(post: state.posts[0]);
                 },
               );
             }

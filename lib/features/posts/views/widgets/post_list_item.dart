@@ -1,7 +1,11 @@
+import 'package:anfari/core/bloc/profile/profile_bloc.dart';
 import 'package:anfari/core/extensions/extensions.dart';
+import 'package:anfari/core/manager/theme/theme_manager.dart';
 import 'package:anfari/core/widgets/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:posts_repository/posts_repository.dart';
 import 'package:user_repository/user_repository.dart';
@@ -21,48 +25,156 @@ class PostCard extends StatelessWidget {
         ),
 
         /// image section
-        const _ImagePost(),
+        _ImagePost(
+          imageUrl: post.imageUrl,
+        ),
 
         /// Likes , comment of the post
-        const _LikesCommentPost(),
+        _LikesCommentPost(
+          likes: post.likes,
+        ),
 
         /// Description section
-        const _DescriptionPost()
+        _DescriptionPost(
+          description: post.Description,
+        )
       ],
     );
   }
 }
 
 class _DescriptionPost extends StatelessWidget {
+  final String description;
   const _DescriptionPost({
     Key? key,
+    required this.description,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.only(
+        top: 8.h,
+        right: 27.w,
+      ),
+      child: Text(
+        description,
+        style: context.textTheme.headline1!.copyWith(
+          fontSize: 12.sp,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
+      ),
+    );
   }
 }
 
 class _LikesCommentPost extends StatelessWidget {
+  final List<String> likes;
   const _LikesCommentPost({
     Key? key,
+    required this.likes,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final uid = context.read<ProfileBloc>().loggedUser.id;
+    return Row(
+      children: [
+        LikeAnimation(
+          isAnimating: likes.contains(uid),
+          child: IconButton(
+            icon: likes.contains(uid)
+                ? const Icon(
+                    Icons.favorite,
+                    color: ThemeManager.primaryColor,
+                  )
+                : const Icon(
+                    Icons.favorite_border,
+                    color: ThemeManager.primaryColor,
+                  ),
+            onPressed: () {
+              likes.add(uid);
+              // TODO: like post
+            },
+          ),
+        ),
+        const Spacer(),
+        IconButton(
+          onPressed: () {
+            // TODO: go to comment screen
+          },
+          icon: const Icon(
+            Icons.comment_outlined,
+            color: ThemeManager.primaryColor,
+          ),
+        )
+      ],
+    );
   }
 }
 
-class _ImagePost extends StatelessWidget {
+class _ImagePost extends StatefulWidget {
+  final String imageUrl;
+
   const _ImagePost({
     Key? key,
+    required this.imageUrl,
   }) : super(key: key);
 
   @override
+  State<_ImagePost> createState() => _ImagePostState();
+}
+
+class _ImagePostState extends State<_ImagePost> {
+  bool isLikeAnimating = false;
+  @override
   Widget build(BuildContext context) {
-    return Container();
+    return GestureDetector(
+      onDoubleTap: () {},
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox(
+            height: context.height * 0.5,
+            width: double.infinity,
+            child: CachedNetworkImage(
+              imageUrl: widget.imageUrl,
+              fit: BoxFit.contain,
+              imageBuilder: (context, imageProvider) {
+                return Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          AnimatedOpacity(
+            opacity: isLikeAnimating ? 1 : 0,
+            duration: 200.milliseconds,
+            child: LikeAnimation(
+              isAnimating: isLikeAnimating,
+              duration: 400.milliseconds,
+              onEnd: () {
+                setState(() {
+                  isLikeAnimating = false;
+                });
+              },
+              child: const Icon(
+                Icons.favorite,
+                color: Colors.white,
+                size: 100,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
 

@@ -70,17 +70,25 @@ class _HomeBody extends StatelessWidget {
               15.w.widthBox,
             ],
           ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                const _ProfileHeader(),
+                _SearchBar(),
+                20.h.heightBox,
+                const _UniversityList(),
+              ],
+            ),
+          )
         ];
       },
       body: Center(
         child: Column(
           children: [
-            const _ProfileHeader(),
-            _SearchBar(),
             20.h.heightBox,
-            const _UniversityList(),
-            20.h.heightBox,
-            const Expanded(child: PostsWidget())
+            const Expanded(
+              child: PostsWidget(),
+            ),
           ],
         ),
       ),
