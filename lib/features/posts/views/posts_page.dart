@@ -10,7 +10,7 @@ class PostsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PostBloc(getIt()),
+      create: (context) => PostBloc(getIt())..add(PostFetched()),
       child: const PostsList(),
     );
   }

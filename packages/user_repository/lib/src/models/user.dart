@@ -11,14 +11,15 @@ class User extends Equatable {
   const User({
     required this.id,
     this.email,
-    this.name,
-    this.firstName,
-    this.lastName,
+    this.UserName,
+    this.firstName = "",
+    this.lastName = "",
     this.photo,
     this.phoneNumber,
-    this.photoResized,
-    this.photoThumbail,
-  });
+    String? photoResized,
+    String? photoThumbail,
+  })  : this.photoResized = photoResized ?? photo,
+        this.photoThumbail = photoThumbail ?? photo;
 
   /// The current user's email address.
   final String? email;
@@ -27,7 +28,7 @@ class User extends Equatable {
   final String id;
 
   /// The current user's name (display name).
-  final String? name;
+  final String? UserName;
 
   /// full name
   final String? firstName;
@@ -55,14 +56,14 @@ class User extends Equatable {
   bool get isNotEmpty => this != User.empty;
 
   @override
-  List<Object?> get props => [email, id, name, photo];
+  List<Object?> get props => [email, id, UserName, photo];
 
   static User fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     if (snapshot.exists) {
       final data = snapshot.data()!;
       return User(
         id: data["uid"],
-        name: data["name"],
+        UserName: data["name"],
         email: data["email"],
         phoneNumber: data["phoneNumber"],
         photo: data["photo"],
@@ -81,7 +82,7 @@ class User extends Equatable {
     } else {
       return User(
         id: data["uid"],
-        name: data["name"],
+        UserName: data["name"],
         email: data["email"],
         phoneNumber: data["phoneNumber"],
         photo: data["photo"],
@@ -96,7 +97,7 @@ class User extends Equatable {
   Map<String, dynamic> toJson() {
     return {
       "uid": id,
-      "name": name,
+      "name": UserName,
       "email": email,
       "phoneNumber": phoneNumber,
       "photo": photo,
@@ -116,7 +117,7 @@ class User extends Equatable {
   }) {
     return User(
       id: id ?? this.id,
-      name: name ?? this.name,
+      UserName: name ?? this.UserName,
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       photo: photo ?? this.photo,

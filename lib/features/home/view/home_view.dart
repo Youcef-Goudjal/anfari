@@ -1,6 +1,7 @@
 import 'package:anfari/core/extensions/extensions.dart';
 import 'package:anfari/core/manager/route/router.dart';
 import 'package:anfari/core/manager/theme/theme_manager.dart';
+import 'package:anfari/core/widgets/avatars.dart';
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../core/bloc/bloc.dart';
 import '../../../core/manager/language/locale_keys.g.dart';
+import '../../posts/posts.dart';
 
 class HomePage extends StatelessWidget {
   static Page<void> page() => const MaterialPage(child: HomePage());
@@ -24,36 +26,9 @@ class HomePage extends StatelessWidget {
           Navigator.pushNamed(context, AppRouter.register);
         }
       },
-      child: Scaffold(
+      child: const Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text(
-            LocaleKeys.anfari.tr(),
-          ),
-          backgroundColor: Colors.white,
-          elevation: 0,
-          actions: [
-            const Align(
-              alignment: Alignment.center,
-              child: FaIcon(
-                FontAwesomeIcons.message,
-                color: Colors.black,
-              ),
-            ),
-            13.w.widthBox,
-            const Align(
-              alignment: Alignment.center,
-              child: FaIcon(
-                FontAwesomeIcons.bell,
-                color: Colors.black,
-              ),
-            ),
-            15.w.widthBox,
-          ],
-        ),
-        body: const SingleChildScrollView(
-          child: _HomeBody(),
-        ),
+        body: _HomeBody(),
       ),
     );
   }
@@ -66,14 +41,48 @@ class _HomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          const _ProfileHeader(),
-          _SearchBar(),
-          20.h.heightBox,
-          const _UniversityList(),
-        ],
+    return NestedScrollView(
+      headerSliverBuilder: (context, innerBoxIsScrolled) {
+        return [
+          SliverAppBar(
+            pinned: true,
+            title: Text(
+              LocaleKeys.anfari.tr(),
+            ),
+            backgroundColor: Colors.white,
+            elevation: 0,
+            actions: [
+              const Align(
+                alignment: Alignment.center,
+                child: FaIcon(
+                  FontAwesomeIcons.message,
+                  color: Colors.black,
+                ),
+              ),
+              13.w.widthBox,
+              const Align(
+                alignment: Alignment.center,
+                child: FaIcon(
+                  FontAwesomeIcons.bell,
+                  color: Colors.black,
+                ),
+              ),
+              15.w.widthBox,
+            ],
+          ),
+        ];
+      },
+      body: Center(
+        child: Column(
+          children: [
+            const _ProfileHeader(),
+            _SearchBar(),
+            20.h.heightBox,
+            const _UniversityList(),
+            20.h.heightBox,
+            const Expanded(child: PostsWidget())
+          ],
+        ),
       ),
     );
   }
@@ -208,37 +217,8 @@ class _ProfileHeader extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   (state is ProfileLoaded)
-                      ? Stack(
-                          children: [
-                            Container(
-                              height: 61.w,
-                              width: 61.w,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                    context
-                                        .read<ProfileBloc>()
-                                        .loggedUser
-                                        .photo!,
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 2.w,
-                              bottom: 8.h,
-                              child: Container(
-                                height: 11.w,
-                                width: 11.w,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: ThemeManager.primaryColor,
-                                ),
-                              ),
-                            )
-                          ],
+                      ? Avatar.medium(
+                          user: context.read<ProfileBloc>().loggedUser,
                         )
                       : SizedBox(
                           height: 61.w,
@@ -252,9 +232,11 @@ class _ProfileHeader extends StatelessWidget {
                       Text(
                         LocaleKeys.home_welcome.tr(
                           namedArgs: {
-                            "name":
-                                context.read<ProfileBloc>().loggedUser.name ??
-                                    "username",
+                            "name": context
+                                    .read<ProfileBloc>()
+                                    .loggedUser
+                                    .UserName ??
+                                "username",
                           },
                         ),
                         style: context.textTheme.headline3!

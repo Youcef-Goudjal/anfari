@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:user_repository/user_repository.dart';
 
 class Post extends Equatable {
   final String uid;
   final User owner;
-  final int likes;
+  final List<String> likes;
   final String imageUrl;
   final String Description;
   final DateTime createdAt;
@@ -12,11 +13,12 @@ class Post extends Equatable {
   Post({
     required this.uid,
     required this.owner,
-    required this.likes,
+    List<String>? likes,
     required this.Description,
     required this.imageUrl,
     DateTime? createdAt,
-  }) : this.createdAt = createdAt ?? DateTime.now();
+  })  : this.createdAt = createdAt ?? DateTime.now(),
+        this.likes = likes ?? [];
 
   @override
   List<Object?> get props => [uid, owner, likes, Description, imageUrl];
@@ -26,7 +28,7 @@ class Post extends Equatable {
     uid: "",
     Description: "",
     owner: User.empty,
-    likes: 0,
+    likes: [],
     imageUrl: "",
   );
 
@@ -43,10 +45,11 @@ class Post extends Equatable {
       return Post(
         uid: data["uid"],
         owner: User.fromMap(data["owner"]),
-        likes: data["likes"],
+        likes:
+            (data["likes"] as List<dynamic>).map((e) => e.toString()).toList(),
         Description: data["Description"],
         imageUrl: data["imageUrl"],
-        createdAt: data["createdAt"],
+        createdAt: (data["createdAt"]as Timestamp).toDate(),
       );
     }
   }

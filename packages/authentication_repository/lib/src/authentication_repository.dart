@@ -130,7 +130,7 @@ extension on firebase_auth.User {
     return User(
       id: uid,
       email: email,
-      name: displayName,
+      UserName: displayName,
       photo: photoURL,
       phoneNumber: phoneNumber,
     );

@@ -31,21 +31,24 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     try {
       if (state.status == PostStatus.initial) {
         final posts = await _postRepository.fetchPosts();
+        bool hasReachedMax = (posts.length) % _postLimit != 0;
         return emit(state.copyWith(
           status: PostStatus.success,
           posts: posts,
-          hasReachedMax: false,
+          hasReachedMax: hasReachedMax,
         ));
       }
       final posts =
-          await _postRepository.fetchPosts(startAtUid: state.posts.last.uid);
+          await _postRepository.fetchPosts
+          (startAtUid: state.posts.last.uid);
+      bool hasReachedMax = (posts.length) % _postLimit == 0;
       posts.isEmpty
           ? emit(state.copyWith(hasReachedMax: true))
           : emit(
               state.copyWith(
                 status: PostStatus.success,
                 posts: List.of(state.posts)..addAll(posts),
-                hasReachedMax: false,
+                hasReachedMax: hasReachedMax,
               ),
             );
     } catch (e) {
