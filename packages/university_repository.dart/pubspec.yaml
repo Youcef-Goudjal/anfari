@@ -1,0 +1,13 @@
+name: university_repository
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  equatable: ^2.0.3
+  user_repository:
+    path: ../user_repository
+  cloud_firestore: ^3.4.9
+  
