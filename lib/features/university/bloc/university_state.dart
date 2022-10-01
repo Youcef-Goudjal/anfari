@@ -2,6 +2,12 @@ part of 'university_bloc.dart';
 
 enum Status { initial, success, failure }
 
+extension StatusEx on Status {
+  bool get isInitial => this == Status.initial;
+  bool get isSuccess => this == Status.success;
+  bool get isFailure => this == Status.failure;
+}
+
 class UniversityState extends Equatable {
   const UniversityState({
     this.hasReachedMax = false,
@@ -33,5 +39,6 @@ class UniversityState extends Equatable {
   final bool hasReachedMax;
 
   @override
-  List<Object> get props => [universitiesStatus, universities, hasReachedMax];
+  List<Object> get props =>
+      [universitiesStatus, universities, hasReachedMax, devisionsStatus];
 }
