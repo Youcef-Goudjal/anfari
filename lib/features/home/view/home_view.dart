@@ -2,6 +2,7 @@ import 'package:anfari/core/extensions/extensions.dart';
 import 'package:anfari/core/manager/route/router.dart';
 import 'package:anfari/core/manager/theme/theme_manager.dart';
 import 'package:anfari/core/widgets/avatars.dart';
+import 'package:anfari/features/university/views/views.dart';
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +85,7 @@ class _HomeBody extends StatelessWidget {
                 const _ProfileHeader(),
                 _SearchBar(),
                 20.h.heightBox,
-                const _UniversityList(),
+                const UniversitiesList(),
               ],
             ),
           )
@@ -104,85 +105,7 @@ class _HomeBody extends StatelessWidget {
   }
 }
 
-class _UniversityList extends StatelessWidget {
-  const _UniversityList({
-    Key? key,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 180.h,
-      child: ListView.separated(
-        padding: EdgeInsets.only(right: 17.w),
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                height: 50.w,
-                width: 50.w,
-                decoration: BoxDecoration(
-                  color: ThemeManager.primaryColor,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-              ),
-            );
-          } else {
-            return SizedBox(
-              width: 125.w,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffD0EBE5).withOpacity(0.5),
-                ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Align(
-                        alignment: Alignment.centerRight,
-                        child: Icon(Icons.exit_to_app),
-                      ),
-                      6.h.heightBox,
-                      Text(
-                        "جامعة بشار",
-                        style: context.textTheme.headline4!.copyWith(
-                          fontSize: 18.sp,
-                        ),
-                      ),
-                      18.h.heightBox,
-                      Text(
-                        "1275 موضوع مع حله",
-                        style: context.textTheme.headline5!.copyWith(
-                          fontSize: 14.sp,
-                          color: Colors.black45,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }
-        },
-        separatorBuilder: (context, index) {
-          return SizedBox(
-            width: 20.w,
-          );
-        },
-        itemCount: 10,
-      ),
-    );
-  }
-}
 
 class _SearchBar extends StatelessWidget {
   final textController = TextEditingController();

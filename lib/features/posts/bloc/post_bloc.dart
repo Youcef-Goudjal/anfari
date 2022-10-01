@@ -31,7 +31,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     try {
       if (state.status == PostStatus.initial) {
         final posts = await _postRepository.fetchPosts();
-        bool hasReachedMax = (posts.length) % _postLimit != 0;
+        bool hasReachedMax = posts.length < _postLimit;
         return emit(state.copyWith(
           status: PostStatus.success,
           posts: posts,
@@ -39,9 +39,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         ));
       }
       final posts =
-          await _postRepository.fetchPosts
-          (startAtUid: state.posts.last.uid);
-      bool hasReachedMax = (posts.length) % _postLimit == 0;
+          await _postRepository.fetchPosts(startAtUid: state.posts.last.uid);
+      bool hasReachedMax = posts.length < _postLimit;
       posts.isEmpty
           ? emit(state.copyWith(hasReachedMax: true))
           : emit(

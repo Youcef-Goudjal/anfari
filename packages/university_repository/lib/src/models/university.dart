@@ -16,7 +16,7 @@ class University extends Equatable {
   }) : this.divisions = divisions ?? [];
 
   @override
-  List<Object?> get props => [uid, name, divisions];
+  List<Object?> get props => [uid, name];
 
   Map<String, dynamic> toJson() {
     return {
@@ -24,6 +24,17 @@ class University extends Equatable {
       "name": name,
     };
   }
+
+  University copyWith({
+    String? uid,
+    String? name,
+    List<Division>? divisions,
+  }) =>
+      University(
+        uid: uid ?? this.uid,
+        name: name ?? this.name,
+        divisions: divisions ?? this.divisions,
+      );
 
   static University empty = University(uid: "", name: "");
 

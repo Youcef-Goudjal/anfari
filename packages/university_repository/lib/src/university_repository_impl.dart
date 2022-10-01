@@ -26,17 +26,19 @@ class UniversityRepositoryImpl implements UniversityRepository {
 
   @override
   Future<List<Division>> getAllDivisions(String universityUid) async {
-    return await classes
+    return await divisions
         .where("universityUid", isEqualTo: universityUid)
         .get()
-        .then((query) => query.docs
-            .map((universityDoc) => Division.fromMap(universityDoc.data()))
-            .toList());
+        .then(
+          (query) => query.docs
+              .map((universityDoc) => Division.fromMap(universityDoc.data()))
+              .toList(),
+        );
   }
 
   @override
   Future<List<Level>> getAllLevelsOfDivision(String divisionUid) async {
-    return await classes
+    return await levels
         .where("divisionUid", isEqualTo: divisionUid)
         .get()
         .then((query) => query.docs
@@ -46,7 +48,7 @@ class UniversityRepositoryImpl implements UniversityRepository {
 
   @override
   Future<List<Module>> getAllModulesOfClass(String classeUid) async {
-    return await classes.where("classeUid", isEqualTo: classeUid).get().then(
+    return await modules.where("classeUid", isEqualTo: classeUid).get().then(
         (query) => query.docs
             .map((moduleDoc) => Module.fromMap(moduleDoc.data()))
             .toList());

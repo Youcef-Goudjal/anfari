@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:posts_repository/posts_repository.dart';
 import 'package:storage_repository/storage_repository.dart';
+import 'package:university_repository/university_repository.dart';
 import 'package:user_repository/user_repository.dart';
 
 import 'core/bloc/bloc.dart';
@@ -26,6 +27,7 @@ void setup() {
   getIt.registerSingleton<UserRepository>(FirebaseUserRepository());
   getIt.registerSingleton<StorageRepository>(FirebaseStorageImpl());
   getIt.registerSingleton<PostRepository>(PostsRepositoryImpl());
+  getIt.registerSingleton<UniversityRepository>(UniversityRepositoryImpl());
 }
 
 void main() async {
