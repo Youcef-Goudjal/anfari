@@ -70,7 +70,7 @@ class _DescriptionPost extends StatelessWidget {
   }
 }
 
-class _LikesCommentPost extends StatelessWidget {
+class _LikesCommentPost extends StatefulWidget {
   final List<String> likes;
   const _LikesCommentPost({
     Key? key,
@@ -78,14 +78,19 @@ class _LikesCommentPost extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<_LikesCommentPost> createState() => _LikesCommentPostState();
+}
+
+class _LikesCommentPostState extends State<_LikesCommentPost> {
+  @override
   Widget build(BuildContext context) {
     final uid = context.read<ProfileBloc>().loggedUser.id;
     return Row(
       children: [
         LikeAnimation(
-          isAnimating: likes.contains(uid),
+          isAnimating: widget.likes.contains(uid),
           child: IconButton(
-            icon: likes.contains(uid)
+            icon: widget.likes.contains(uid)
                 ? const Icon(
                     Icons.favorite,
                     color: ThemeManager.primaryColor,
@@ -95,7 +100,12 @@ class _LikesCommentPost extends StatelessWidget {
                     color: ThemeManager.primaryColor,
                   ),
             onPressed: () {
-              likes.add(uid);
+              if (widget.likes.contains(uid)) {
+                widget.likes.remove(uid);
+              } else {
+                widget.likes.add(uid);
+              }
+              setState(() {});
               // TODO: like post
             },
           ),

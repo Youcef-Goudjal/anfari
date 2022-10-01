@@ -16,9 +16,11 @@ class User extends Equatable {
     this.lastName = "",
     this.photo,
     this.phoneNumber,
+    bool? isDeveloper,
     String? photoResized,
     String? photoThumbail,
   })  : this.photoResized = photoResized ?? photo,
+        this.isDeveloper = isDeveloper ?? false,
         this.photoThumbail = photoThumbail ?? photo;
 
   /// The current user's email address.
@@ -46,6 +48,8 @@ class User extends Equatable {
   /// small version of [photo]
   final String? photoThumbail;
 
+  final bool isDeveloper;
+
   /// Empty user which represents an unauthenticated user.
   static const empty = User(id: '');
 
@@ -71,6 +75,7 @@ class User extends Equatable {
         lastName: data["lastName"],
         photoResized: data["photoResized"],
         photoThumbail: data["photoThumbail"],
+        isDeveloper: data["isDeveloper"],
       );
     }
     return User.empty;
@@ -90,6 +95,7 @@ class User extends Equatable {
         lastName: data["lastName"],
         photoResized: data["photoResized"],
         photoThumbail: data["photoThumbail"],
+        isDeveloper: data["isDeveloper"],
       );
     }
   }
@@ -105,6 +111,7 @@ class User extends Equatable {
       "lastName": lastName,
       "photoResized": photoResized,
       "photoThumbail": photoThumbail,
+      "isDeveloper": isDeveloper,
     };
   }
 
@@ -114,6 +121,7 @@ class User extends Equatable {
     String? email,
     String? photo,
     String? phoneNumber,
+    bool? isDeveloper,
   }) {
     return User(
       id: id ?? this.id,
@@ -121,6 +129,7 @@ class User extends Equatable {
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       photo: photo ?? this.photo,
+      isDeveloper: isDeveloper ?? this.isDeveloper,
     );
   }
 }

@@ -5,6 +5,8 @@ import 'package:anfari/features/home/home.dart';
 import 'package:anfari/features/splash/splash_view.dart';
 import 'package:flutter/material.dart';
 
+import '../../../features/developer/views/views.dart';
+
 class AppRouter {
   static const root = "/";
   static const splash = "/splash";
@@ -12,6 +14,7 @@ class AppRouter {
   static const register = "/register";
   static const home = "/home";
   static const boarding = "/boarding";
+  static const developer = "/developer";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -27,6 +30,8 @@ class AppRouter {
 
       case boarding:
         return MaterialPageRoute(builder: (_) => const BoardingPage());
+      case developer:
+        return MaterialPageRoute(builder: (_) => const DeveloperHome());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

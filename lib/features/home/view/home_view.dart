@@ -24,6 +24,14 @@ class HomePage extends StatelessWidget {
       listener: (context, state) {
         if (state is ProfileNotRegistred) {
           Navigator.pushNamed(context, AppRouter.register);
+        } else if (state is ProfileLoaded) {
+          if (state.loggedUser.isDeveloper) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppRouter.developer,
+              (route) => false,
+            );
+          }
         }
       },
       child: const Scaffold(

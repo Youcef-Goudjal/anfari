@@ -1,6 +1,8 @@
+import 'package:anfari/core/extensions/extensions.dart';
 import 'package:anfari/features/posts/posts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'widgets/widgets.dart';
 
@@ -36,11 +38,13 @@ class _PostsListState extends State<PostsList> {
                 child: Text("no posts"),
               );
             } else {
-              return ListView.builder(
+              return ListView.separated(
+                padding: EdgeInsets.only(top: 19.h, bottom: 25.h),
                 /*    itemCount: state.hasReachedMax
                     ? state.posts.length
                     : state.posts.length + 1, */
                 controller: _scrollController,
+                itemCount: 10,
                 itemBuilder: (context, index) {
                   /* return index >= state.posts.length
                       ? const BottomLoader()
@@ -48,6 +52,9 @@ class _PostsListState extends State<PostsList> {
                           post: state.posts[index],
                         ); */
                   return PostCard(post: state.posts[0]);
+                },
+                separatorBuilder: (context, index) {
+                  return 20.h.heightBox;
                 },
               );
             }

@@ -16,6 +16,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final StorageRepository _storageRepository;
   StreamSubscription? _profileStreamSub;
   User loggedUser;
+  bool isDeveloper = false;
 
   ProfileBloc(
     AuthenticationRepository authenticationRepository,
